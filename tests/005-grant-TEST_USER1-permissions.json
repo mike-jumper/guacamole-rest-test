@@ -1,0 +1,44 @@
+{
+
+    "request" : {
+        "method" : "PATCH",
+        "url"    : "api/session/data/$DATASOURCE/users/TEST_USER1/permissions?token=$TOKEN",
+        "data" : [
+            {
+                "op": "add",
+                "path": "/userPermissions/TEST_USER1",
+                "value": "UPDATE"
+            },
+            {
+                "op": "add",
+                "path": "/systemPermissions",
+                "value": "CREATE_USER"
+            },
+            {
+                "op": "add",
+                "path": "/systemPermissions",
+                "value": "CREATE_USER_GROUP"
+            },
+            {
+                "op": "add",
+                "path": "/systemPermissions",
+                "value": "CREATE_CONNECTION"
+            },
+            {
+                "op": "add",
+                "path": "/systemPermissions",
+                "value": "CREATE_CONNECTION_GROUP"
+            },
+            {
+                "op": "add",
+                "path": "/systemPermissions",
+                "value": "CREATE_SHARING_PROFILE"
+            }
+        ]
+    },
+
+    "response" : {
+        "code" : 204
+    }
+
+}

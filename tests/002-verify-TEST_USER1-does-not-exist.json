@@ -1,0 +1,12 @@
+{
+
+    "request" : {
+        "method" : "GET",
+        "url"    : "api/session/data/$DATASOURCE/users/TEST_USER1?token=$TOKEN"
+    },
+
+    "response" : {
+        "code" : 404
+    }
+
+}

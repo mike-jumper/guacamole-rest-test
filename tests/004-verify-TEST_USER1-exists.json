@@ -1,0 +1,15 @@
+{
+
+    "request" : {
+        "method" : "GET",
+        "url"    : "api/session/data/$DATASOURCE/users?token=$TOKEN"
+    },
+
+    "response" : {
+        "code" : 200,
+        "checks" : {
+            ".TEST_USER1.username" : "TEST_USER1"
+        }
+    }
+
+}

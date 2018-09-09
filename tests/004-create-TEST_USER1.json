@@ -1,0 +1,28 @@
+{
+
+    "request" : {
+        "method" : "POST",
+        "url"    : "api/session/data/$DATASOURCE/users?token=$TOKEN",
+        "data"   : {
+            "username" : "TEST_USER1",
+            "attributes" : {  
+                "guac-full-name"           : "Test User1",
+                "guac-email-address"       : "tu1@example.net",
+                "guac-organization"        : "Example, Inc.",
+                "guac-organizational-role" : "Test"
+            }
+        }
+    },
+
+    "response" : {
+        "code" : 200,
+        "checks" : {
+            ".username" : "TEST_USER1",
+            ".attributes[\"guac-full-name\"]"           : "Test User1",
+            ".attributes[\"guac-email-address\"]"       : "tu1@example.net",
+            ".attributes[\"guac-organization\"]"        : "Example, Inc.",
+            ".attributes[\"guac-organizational-role\"]" : "Test"
+        }
+    }
+
+}

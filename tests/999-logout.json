@@ -1,0 +1,12 @@
+{
+
+    "request" : {
+        "method" : "DELETE",
+        "url"    : "api/tokens/$TOKEN"
+    },
+
+    "response" : {
+        "code" : 204
+    }
+
+}

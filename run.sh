@@ -1,5 +1,7 @@
-#!/bin/bash
-set -e
+#!/bin/bash -e
+
+# Log the line numbers of any unexpected errors
+trap 'echo "Test script failed at line $LINENO."' ERR
 
 #
 # Base parameters
@@ -33,7 +35,7 @@ stty echo
 
 TOKEN="$(curl --data-urlencode "username=$USERNAME" \
               --data-urlencode "password=$PASSWORD" \
-              -s "$BASEURL/api/tokens" | jq -r '.authToken')"
+              -sS "$BASEURL/api/tokens" | jq -r '.authToken')"
 
 # Verify whether login succeeded
 if [ -z "$TOKEN" -o "$TOKEN" = "null" ]; then
@@ -71,12 +73,12 @@ for JSON in tests/*.json; do
 
     # Make request
     if [ "$DATA" != "null" ]; then
-        RESPONSE_CODE="$(curl -s -X "$METHOD"                       \
+        RESPONSE_CODE="$(curl -sS -X "$METHOD"                       \
             -o "last-response.json" -w "%{http_code}"               \
             -H "Content-Type: application/json" --data-raw "$DATA"  \
             "$BASEURL/$URL")"
     else
-        RESPONSE_CODE="$(curl -s -X "$METHOD"                       \
+        RESPONSE_CODE="$(curl -sS -X "$METHOD"                       \
             -o "last-response.json" -w "%{http_code}"               \
             "$BASEURL/$URL")"
     fi
@@ -88,15 +90,17 @@ for JSON in tests/*.json; do
     fi
 
     # Verify each check passes
-    echo "$CHECKS" | while read -r KEY; do
-        read -r VALUE
+    if [ -n "$CHECKS" ]; then
+        echo "$CHECKS" | while read -r KEY; do
+            read -r VALUE
 
-        if ! jq -e "$KEY == $VALUE" "last-response.json" > /dev/null; then
-            echo "FAIL ($KEY)"
-            exit 1
-        fi
+            if ! jq -e "$KEY == $VALUE" "last-response.json" > /dev/null; then
+                echo "FAIL ($KEY)"
+                exit 1
+            fi
 
-    done
+        done
+    fi
 
     # Test passes
     echo "OK"
